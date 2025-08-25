@@ -5,8 +5,6 @@ You will implement and extend starter code to add functionality such as tracking
 
 ## Getting Started
 
-Instructions for how to get a copy of the project running on your local machine.
-
 ### Dependencies
 
 Make sure you have python version >= 3.10.x installed on your computer. 
@@ -14,11 +12,7 @@ Make sure you have python version >= 3.10.x installed on your computer.
 
 ### Installation
 
-Step by step explanation of how to get a dev environment running.
-
-List out the steps
-
-1. Clone the repo
+1. Clone the repo:
 
 ```
 bash
@@ -52,7 +46,6 @@ python -m unittest balance/test_balance_observer.py
 - test_transaction.py → Confirms transactions update balances correctly.
 - test_transaction_adapter.py → Ensures external income data is correctly adapted into Transaction objects.
 - test_balance_observer.py → Validates that low-balance alerts are triggered at the correct threshold.
-- test_student_pattern.py → (Optional) Tests the additional design pattern chosen by the learner.
 
 ## Project Instructions
 
