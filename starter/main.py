@@ -2,8 +2,7 @@
 from balance.balance import Balance
 from balance.balance_observer import LowBalanceAlertObserver
 from balance.balance_observer import PrintObserver
-from transaction.transaction import Transaction
-from transaction.transaction_category import TransactionCategory
+from transaction.transaction_factory import TransactionFactory
 from transaction.transaction_adapter import TransactionAdapter
 from transaction.external_income_transaction import ExternalFreelanceIncome
 
@@ -11,14 +10,20 @@ from transaction.external_income_transaction import ExternalFreelanceIncome
 def main():
     print("Adding transactions...")
    
-    # TODO: Create balance and add observers
+    # 1. Create balance (Singleton) and add observers
+    balance = Balance.get_instance()
+    print_observer = PrintObserver()
+    low_balance_alert = LowBalanceAlertObserver(threshold=50)
+    balance.register_observer(print_observer)
+    balance.register_observer(low_balance_alert)
 
     # Create standard transactions
+    # Use the Factory Method to create transactions
     transactions = [
-        Transaction(100, TransactionCategory.INCOME),
-        Transaction(50, TransactionCategory.EXPENSE),
-        Transaction(200, TransactionCategory.INCOME),
-        Transaction(75, TransactionCategory.EXPENSE),
+        TransactionFactory.create_transaction(100, "INCOME"),
+        TransactionFactory.create_transaction(60, "EXPENSE"),
+        TransactionFactory.create_transaction(200, "INCOME"),
+        TransactionFactory.create_transaction(90, "EXPENSE"),
     ]
 
     # Create an external income transaction (via Adapter pattern)
@@ -28,7 +33,12 @@ def main():
 
     all_transactions = transactions + [adapted_transaction]
 
-    # TODO: Apply all transactions to balance
+    # 2. Apply all transactions to balance
+    for t in all_transactions:
+        balance.apply_transaction(t)
+
+    print("\nFinal Summary:")
+    print(balance.summary())
 
 if __name__ == "__main__":
     main()
